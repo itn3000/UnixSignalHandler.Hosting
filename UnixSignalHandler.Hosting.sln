@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnixSignalHandler.Hosting",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnixSignalHandler.Hosting.Test", "UnixSignalHandler.Hosting.Test\UnixSignalHandler.Hosting.Test.csproj", "{AC5F0580-F520-4EE7-849E-7B38F9F67BD1}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{7E58F230-5D99-4436-9231-7498BECE8DC2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicSample", "samples\BasicSample\BasicSample.csproj", "{E38C4760-95D1-4A0F-AFAB-6AA0AB03F5C4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,5 +48,20 @@ Global
 		{AC5F0580-F520-4EE7-849E-7B38F9F67BD1}.Release|x64.Build.0 = Release|Any CPU
 		{AC5F0580-F520-4EE7-849E-7B38F9F67BD1}.Release|x86.ActiveCfg = Release|Any CPU
 		{AC5F0580-F520-4EE7-849E-7B38F9F67BD1}.Release|x86.Build.0 = Release|Any CPU
+		{E38C4760-95D1-4A0F-AFAB-6AA0AB03F5C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E38C4760-95D1-4A0F-AFAB-6AA0AB03F5C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E38C4760-95D1-4A0F-AFAB-6AA0AB03F5C4}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{E38C4760-95D1-4A0F-AFAB-6AA0AB03F5C4}.Debug|x64.Build.0 = Debug|Any CPU
+		{E38C4760-95D1-4A0F-AFAB-6AA0AB03F5C4}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E38C4760-95D1-4A0F-AFAB-6AA0AB03F5C4}.Debug|x86.Build.0 = Debug|Any CPU
+		{E38C4760-95D1-4A0F-AFAB-6AA0AB03F5C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E38C4760-95D1-4A0F-AFAB-6AA0AB03F5C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E38C4760-95D1-4A0F-AFAB-6AA0AB03F5C4}.Release|x64.ActiveCfg = Release|Any CPU
+		{E38C4760-95D1-4A0F-AFAB-6AA0AB03F5C4}.Release|x64.Build.0 = Release|Any CPU
+		{E38C4760-95D1-4A0F-AFAB-6AA0AB03F5C4}.Release|x86.ActiveCfg = Release|Any CPU
+		{E38C4760-95D1-4A0F-AFAB-6AA0AB03F5C4}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E38C4760-95D1-4A0F-AFAB-6AA0AB03F5C4} = {7E58F230-5D99-4436-9231-7498BECE8DC2}
 	EndGlobalSection
 EndGlobal
