@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Threading.Tasks;
 using Mono.Unix.Native;
 using System.Threading;
+using System.Reactive;
 
 namespace BasicSample
 {
@@ -33,14 +34,30 @@ namespace BasicSample
 
     class Program
     {
+        static IDisposable SetDiagnosticListener()
+        {
+            return System.Diagnostics.DiagnosticListener.AllListeners.Subscribe((listener) =>
+            {
+                if(listener.Name == UnixSignalHandler.Hosting.SignalHandlerHostedService.DiagnosticName)
+                {
+                    listener.Subscribe(ev =>
+                    {
+                        Console.WriteLine($"{ev.Key}, {ev.Value}");
+                    });
+                }
+            });
+        }
         static async Task Main(string[] args)
         {
-            await new HostBuilder()
-                .ConfigureServices((ctx, services) => services.AddSignalHandler(new Signum[] { Signum.SIGUSR1, Signum.SIGHUP }, (s, c) =>
-                     {
-                         Console.WriteLine($"{s}");
-                     }).AddHostedService<MyService>())
-                .RunConsoleAsync();
+            using(SetDiagnosticListener())
+            {
+                await new HostBuilder()
+                    .ConfigureServices((ctx, services) => services.AddSignalHandler(new Signum[] { Signum.SIGUSR1, Signum.SIGHUP }, (s, c) =>
+                        {
+                            Console.WriteLine($"{s}");
+                        }).AddHostedService<MyService>())
+                    .RunConsoleAsync();
+            }
         }
     }
 }

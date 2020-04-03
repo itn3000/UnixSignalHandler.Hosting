@@ -30,12 +30,23 @@ namespace UnixSignalHandler.Hosting
             IsTimeout = isTimeout;
         }
     }
+    public class SignalTaskErrorEventArgs
+    {
+        public Signum Signal { get; }
+        public Exception Error { get; }
+        public SignalTaskErrorEventArgs(Signum signum, Exception e)
+        {
+            Signal = signum;
+            Error = e;
+        }
+    }
     public class SignalHandlerHostedService : IHostedService
     {
         public const string WorkerErrorEventName = "worker_error";
         public const string HandlerErrorEventName = "handler_error";
         public const string OperationCancelledEventName = "operation_cancelled";
         public const string SignalSentEventName = "signal_sent";
+        public const string SignalTaskErrorEventName = "signal_task_error";
         public const string DiagnosticName = nameof(SignalHandlerHostedService);
         Thread _signalTask;
         private static readonly DiagnosticListener _diag = new DiagnosticListener(DiagnosticName);
@@ -103,7 +114,7 @@ namespace UnixSignalHandler.Hosting
                     try
                     {
                         var idx = UnixSignal.WaitAny(_signalhandle, TimeSpan.FromSeconds(1));
-                        if (idx >= 0 && idx < _signalhandle.Length)
+                        if (!_cts.IsCancellationRequested && idx >= 0 && idx < _signalhandle.Length)
                         {
                             foreach(var s in _signalhandle)
                             {
@@ -117,7 +128,14 @@ namespace UnixSignalHandler.Hosting
                     }
                     catch (Exception e)
                     {
-                        Console.WriteLine($"signaltask error: {e}");
+                        if(_diag.IsEnabled(SignalTaskErrorEventName))
+                        {
+                            _diag.Write(SignalTaskErrorEventName, e);
+                        }
+                        if(!_cts.IsCancellationRequested)
+                        {
+                            Thread.Sleep(1000);
+                        }
                     }
                 }
             });
